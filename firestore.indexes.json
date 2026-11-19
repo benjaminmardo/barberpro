@@ -1,0 +1,13 @@
+{
+  "indexes": [
+    {
+      "collectionGroup": "atenciones",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "id_usuario", "order": "ASCENDING" },
+        { "fieldPath": "fecha_registro", "order": "DESCENDING" }
+      ]
+    }
+  ],
+  "fieldOverrides": []
+}

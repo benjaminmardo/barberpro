@@ -1,0 +1,6 @@
+{
+  "projects": {
+    "default": "demo-barber-pro",
+    "production": "barberpro-df017"
+  }
+}

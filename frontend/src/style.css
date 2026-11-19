@@ -1,0 +1,67 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light;
+  --text: #241f17;
+  --muted: #6f6557;
+  --cream: #f9f7f2;
+  --surface: #ffffff;
+  --gold: #b38a46;
+  --gold-dark: #76551f;
+  --gold-soft: #f5ecda;
+  --line: #eae2d5;
+  --display: 'Playfair Display Variable', Georgia, serif;
+  --body: 'DM Sans Variable', system-ui, sans-serif;
+  font-family: var(--body);
+  color: var(--text);
+  background: var(--cream);
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+}
+
+body { margin: 0; min-width: 320px; min-height: 100vh; }
+button, input, textarea, select { font: inherit; }
+button { cursor: pointer; }
+button:disabled { cursor: not-allowed; opacity: .62; }
+:focus-visible { outline: 2px solid var(--gold-dark); outline-offset: 3px; }
+::selection { background: #f1ddb4; color: var(--text); }
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: .55rem;
+  min-height: 42px;
+  padding: .65rem 1rem;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  font-weight: 660;
+  line-height: 1.15;
+  transition: background-color .16s ease, border-color .16s ease;
+}
+.btn-primary { color: #241b0d; background: #cda966; border-color: #c29a56; }
+.btn-primary:hover:not(:disabled) { background: #d8b877; }
+.btn-secondary { color: var(--text); background: var(--surface); border-color: #ded3c1; }
+.btn-secondary:hover:not(:disabled) { border-color: #b48e51; background: #fffaf0; }
+.field { display: grid; gap: .46rem; font-size: .9rem; font-weight: 650; color: var(--text); }
+.field input, .field select, .field textarea {
+  min-width: 0;
+  min-height: 44px;
+  padding: .68rem .8rem;
+  border: 1px solid #ded5c8;
+  border-radius: 9px;
+  color: var(--text);
+  background: #fff;
+  font-weight: 450;
+}
+.field input::placeholder { color: #81776a; }
+.panel { border: 1px solid var(--line); border-radius: 16px; background: var(--surface); }
+.eyebrow { color: var(--gold-dark); font-size: .72rem; font-weight: 760; letter-spacing: .135em; }
+.notice { padding: .75rem .85rem; border-radius: 9px; border: 1px solid #e5cfaa; background: #fff7e7; color: #684d24; font-size: .86rem; }
+.notice-error { border-color: #ead2cb; background: #fff3f0; color: #8c3529; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
+}

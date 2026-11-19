@@ -1,0 +1,74 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function perfil() {
+      return get(/databases/$(database)/documents/usuarios/$(request.auth.uid)).data;
+    }
+
+    function tieneRol(rol) {
+      return request.auth != null && perfil().rol == rol;
+    }
+
+    function administrador() {
+      return tieneRol('administrador');
+    }
+
+    function barbero() {
+      return tieneRol('barbero');
+    }
+
+    function servicio(id) {
+      return get(/databases/$(database)/documents/servicios/$(id)).data;
+    }
+
+    function cobroValido(cobro) {
+      let catalogo = servicio(cobro.id_servicio);
+      let usuario = perfil();
+      return catalogo.precio is int
+        && cobro.nombre_servicio == catalogo.nombre_servicio
+        && cobro.nombre_barbero == usuario.nombre
+        && cobro.monto_total is int
+        && cobro.monto_total == catalogo.precio
+        && cobro.comision_generada is int
+        && cobro.comision_generada == math.round(catalogo.precio * usuario.get('porcentaje_comision', 50) / 100.0);
+    }
+
+    function atencionPropiaValida(id) {
+      let cobro = request.resource.data;
+      let campos = [
+        'id_atencion', 'fecha_registro', 'monto_total', 'comision_generada',
+        'metodo_pago', 'estado', 'id_usuario', 'nombre_barbero',
+        'id_servicio', 'nombre_servicio'
+      ];
+      return cobro.keys().hasAll(campos) && cobro.keys().hasOnly(campos)
+        && cobro.id_atencion == id
+        && cobro.id_usuario == request.auth.uid
+        && cobro.id_servicio is string
+        && cobro.fecha_registro == request.time
+        && cobro.estado == 'activa'
+        && cobro.metodo_pago in ['efectivo', 'tarjeta']
+        && cobroValido(cobro);
+    }
+
+    match /usuarios/{uid} {
+      allow get: if administrador() || (barbero() && request.auth.uid == uid);
+      allow list, create, update, delete: if administrador();
+    }
+
+    match /servicios/{id} {
+      allow read: if administrador() || barbero();
+      allow write: if administrador();
+    }
+
+    match /metas/{id} {
+      allow read: if administrador() || barbero();
+      allow write: if administrador();
+    }
+
+    match /atenciones/{id} {
+      allow read: if administrador() || (barbero() && resource.data.id_usuario == request.auth.uid);
+      allow create: if administrador() || (barbero() && atencionPropiaValida(id));
+      allow update, delete: if administrador();
+    }
+  }
+}
