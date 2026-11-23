@@ -13,14 +13,16 @@ npm --prefix frontend run dev
 
 Abre [Barber Pro local](http://localhost:5173/login). Si Firebase no está configurado, el servidor de desarrollo ofrece los botones **Administrador** y **Barbero**. También puedes escribir cualquiera de estos usuarios y su contraseña. Son cuentas de ejemplo y sus datos se guardan en el navegador.
 
-- Administrador `admin` · `Demo777!`
-- Barbero `barbero01` · `Barbero01!`
-- Barbero `barbero02` · `Barbero02!`
-- Barbero `barbero03` · `Barbero03!`
-- Barbero `barbero04` · `Barbero04!`
-- Barbero `barbero05` · `Barbero05!`
+- Administrador `admin` · `DemoLocal777!`
+- Barbero `barbero01` · `Local01!`
+- Barbero `barbero02` · `Local02!`
+- Barbero `barbero03` · `Local03!`
+- Barbero `barbero04` · `Local04!`
+- Barbero `barbero05` · `Local05!`
 
 Si ya configuraste Firebase y quieres probar la demo, pon temporalmente `VITE_DEMO_MODE=true` en `frontend/.env`. La configuración aplica solo con el servidor de desarrollo. Si restableces la contraseña de un barbero en la demo, ese navegador usará la nueva contraseña.
+
+Para usar claves personalizadas en una demo local, crea `frontend/.env.demo.local` con `VITE_DEMO_MODE=true` y define `VITE_DEMO_PASSWORD_ADMIN` y `VITE_DEMO_PASSWORD_BARBERO01` a `VITE_DEMO_PASSWORD_BARBERO05` para las cuentas que quieras personalizar. Arranca la demo con `npm --prefix frontend run dev -- --mode demo`. Usa este modo en `localhost`. El archivo está excluido de Git y el navegador puede leer las claves del modo demo.
 
 ## Configuración con Firebase
 
@@ -90,7 +92,7 @@ npm --prefix backend ci
 npm --prefix backend run crear-cuentas
 ```
 
-El comando crea `admin` como administrador y `barbero01`, `barbero02` y `barbero03` como empleados. También crea sus perfiles en Firestore. Cada contraseña combina una palabra corta con mayúscula inicial, cuatro números y un símbolo, por ejemplo `Corte4821!`. Copia las contraseñas de la terminal al crearlas y compártelas individualmente. Volver a ejecutar el comando conserva las contraseñas de las cuentas existentes.
+El comando crea `admin` como administrador y `barbero01` a `barbero05` como empleados. También crea sus perfiles en Firestore. Cada contraseña combina una palabra corta con mayúscula inicial, cuatro números y un símbolo, por ejemplo `Corte4821!`. Copia las contraseñas de la terminal al crearlas y compártelas individualmente. Volver a ejecutar el comando conserva las contraseñas de las cuentas existentes.
 
 ### 6. Arranca Barber Pro
 

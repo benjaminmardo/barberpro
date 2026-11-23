@@ -11,6 +11,8 @@ const initialAccounts: Omit<CreateUsuarioDto, 'password'>[] = [
   { usuario: 'barbero01', nombre: 'Barbero 01', rol: 'barbero' },
   { usuario: 'barbero02', nombre: 'Barbero 02', rol: 'barbero' },
   { usuario: 'barbero03', nombre: 'Barbero 03', rol: 'barbero' },
+  { usuario: 'barbero04', nombre: 'Barbero 04', rol: 'barbero' },
+  { usuario: 'barbero05', nombre: 'Barbero 05', rol: 'barbero' },
 ];
 
 async function createAccounts() {

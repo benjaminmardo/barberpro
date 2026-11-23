@@ -7,13 +7,24 @@ const sessionKey = 'barber-pro.demo.session'
 const adminId = 'demo-admin'
 const barberId = 'demo-barber'
 const demoAccounts = [
-  { id_usuario: adminId, nombre: 'Camila Torres', usuario: 'admin', email: 'admin@barberpro.demo', rol: 'administrador', porcentaje_comision: 50, password: 'Demo777!' },
-  { id_usuario: barberId, nombre: 'Matías Rojas', usuario: 'barbero01', email: 'barbero@barberpro.demo', rol: 'barbero', porcentaje_comision: 50, password: 'Barbero01!' },
-  { id_usuario: 'demo-diego', nombre: 'Diego Silva', usuario: 'barbero02', email: 'diego@barberpro.demo', rol: 'barbero', porcentaje_comision: 50, password: 'Barbero02!' },
-  { id_usuario: 'demo-javier', nombre: 'Javier Mella', usuario: 'barbero03', email: 'javier@barberpro.demo', rol: 'barbero', porcentaje_comision: 45, password: 'Barbero03!' },
-  { id_usuario: 'demo-tomas', nombre: 'Tomás Vera', usuario: 'barbero04', email: 'tomas@barberpro.demo', rol: 'barbero', porcentaje_comision: 55, password: 'Barbero04!' },
-  { id_usuario: 'demo-benja', nombre: 'Benjamín Soto', usuario: 'barbero05', email: 'benja@barberpro.demo', rol: 'barbero', porcentaje_comision: 50, password: 'Barbero05!' },
+  { id_usuario: adminId, nombre: 'Camila Torres', usuario: 'admin', email: 'admin@barberpro.demo', rol: 'administrador', porcentaje_comision: 50, password: 'DemoLocal777!' },
+  { id_usuario: barberId, nombre: 'Matías Rojas', usuario: 'barbero01', email: 'barbero@barberpro.demo', rol: 'barbero', porcentaje_comision: 50, password: 'Local01!' },
+  { id_usuario: 'demo-diego', nombre: 'Diego Silva', usuario: 'barbero02', email: 'diego@barberpro.demo', rol: 'barbero', porcentaje_comision: 50, password: 'Local02!' },
+  { id_usuario: 'demo-javier', nombre: 'Javier Mella', usuario: 'barbero03', email: 'javier@barberpro.demo', rol: 'barbero', porcentaje_comision: 45, password: 'Local03!' },
+  { id_usuario: 'demo-tomas', nombre: 'Tomás Vera', usuario: 'barbero04', email: 'tomas@barberpro.demo', rol: 'barbero', porcentaje_comision: 55, password: 'Local04!' },
+  { id_usuario: 'demo-benja', nombre: 'Benjamín Soto', usuario: 'barbero05', email: 'benja@barberpro.demo', rol: 'barbero', porcentaje_comision: 50, password: 'Local05!' },
 ] satisfies (Usuario & { usuario: string; password: string })[]
+
+const demoPasswordOverrides: Readonly<Record<string, string | undefined>> = import.meta.env.DEV && import.meta.env.MODE === 'demo'
+  ? {
+      admin: import.meta.env.VITE_DEMO_PASSWORD_ADMIN,
+      barbero01: import.meta.env.VITE_DEMO_PASSWORD_BARBERO01,
+      barbero02: import.meta.env.VITE_DEMO_PASSWORD_BARBERO02,
+      barbero03: import.meta.env.VITE_DEMO_PASSWORD_BARBERO03,
+      barbero04: import.meta.env.VITE_DEMO_PASSWORD_BARBERO04,
+      barbero05: import.meta.env.VITE_DEMO_PASSWORD_BARBERO05,
+    }
+  : {}
 
 const initialCatalog: Servicio[] = [
   { id_servicio: 'corte', nombre_servicio: 'Corte Tradicional', precio: 14000 },
@@ -166,7 +177,7 @@ export const demo = {
       const storedHash = data.passwords[user.id_usuario]
       const matches = storedHash
         ? storedHash === await digest(password)
-        : stockAccount?.password === password
+        : stockAccount && (demoPasswordOverrides[stockAccount.usuario] || stockAccount.password) === password
       if (matches) {
         sessionStorage.setItem(sessionKey, user.id_usuario)
         return user

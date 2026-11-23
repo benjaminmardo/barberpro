@@ -8,7 +8,7 @@ En la revisión del 19 de noviembre de 2026, la consulta de configuración de Au
 
 En una revisión posterior, Authentication ya permitió el acceso y se encontraron los cuatro perfiles reales. El backend requería la credencial de Firebase Admin también al iniciarse. La ruta local del JSON descargado quedó guardada en `backend/.env`, que está excluido de Git. Si aparece un problema de credencial, comprueba que ese archivo JSON siga en la ruta configurada y reinicia el backend.
 
-El frontend carga la configuración de la aplicación web desde `frontend/.env`. Las cuentas de demostración están disponibles al activar la demo local. Las cuentas reales se crean en Authentication y tienen un perfil con rol en Firestore. El administrador de demostración usa `Demo777!`. La contraseña real se obtiene al crear la cuenta.
+El frontend carga la configuración de la aplicación web desde `frontend/.env`. Consulta en el [README](README.md#demostración-local) los accesos de demostración. Las cuentas de Firebase se crean en Authentication y tienen un perfil con rol en Firestore. El comando de creación entrega las contraseñas de las cuentas nuevas.
 
 ## 1. Inicializa Authentication
 
@@ -85,7 +85,7 @@ npm.cmd --prefix backend run crear-cuentas
 Este comando crea las siguientes cuentas con sus perfiles:
 
 - `admin`, con rol `administrador`.
-- `barbero01`, `barbero02` y `barbero03`, con rol `barbero`.
+- `barbero01` a `barbero05`, con rol `barbero`.
 
 La terminal muestra la contraseña de cada cuenta al crearla. Cópiala. Si una cuenta ya existe y tiene el perfil esperado, el comando indica que conserva su contraseña actual.
 
