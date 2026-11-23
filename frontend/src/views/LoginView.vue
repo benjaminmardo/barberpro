@@ -63,13 +63,16 @@ async function enter(role?: Rol) {
             Contraseña
             <span class="input-wrap">
               <LockKeyhole :size="18" aria-hidden="true" />
-              <input v-model="password" name="password" :type="reveal ? 'text' : 'password'" placeholder="Tu contraseña" autocomplete="current-password" required />
+              <input v-model="password" name="password" :type="reveal ? 'text' : 'password'" placeholder="Tu contraseña" autocomplete="current-password" :aria-describedby="canSignIn ? 'password-mode' : undefined" required />
               <button type="button" class="reveal-button" :aria-label="reveal ? 'Ocultar contraseña' : 'Mostrar contraseña'" :aria-pressed="reveal" @click="reveal = !reveal">
                 <EyeOff v-if="reveal" :size="18" aria-hidden="true" />
                 <Eye v-else :size="18" aria-hidden="true" />
               </button>
             </span>
           </label>
+          <p v-if="canSignIn" id="password-mode" class="password-mode">
+            {{ demoEnabled ? 'Demostración local. Usa una contraseña de la demo.' : 'Acceso con Firebase. Usa la contraseña asignada a tu cuenta.' }}
+          </p>
           <p v-if="error || sessionError" class="notice notice-error" role="alert">{{ error || sessionError }}</p>
           <p v-if="!demoEnabled && !firebaseConfigured" class="notice" role="status">Para habilitar el acceso, configura Firebase en el frontend.</p>
           <p v-else-if="!canSignIn" class="notice" role="status">{{ apiUnavailableMessage }}</p>
@@ -127,6 +130,7 @@ async function enter(role?: Rol) {
 .input-wrap > input { width: 100%; padding: .85rem 2.9rem .85rem 2.65rem; }
 .reveal-button { position: absolute; right: 7px; display: grid; height: 36px; width: 36px; place-items: center; border-radius: 7px; color: var(--muted); }
 .reveal-button:hover { background: var(--gold-soft); color: var(--text); }
+.password-mode { margin-top: -.55rem; color: var(--muted); font-size: .85rem; }
 .submit-button { min-height: 52px; margin-top: .25rem; justify-content: space-between; }
 .password-help { margin-top: .95rem; font-size: .88rem; }
 .password-help summary { width: fit-content; cursor: pointer; color: var(--gold-dark); font-weight: 680; }

@@ -11,7 +11,7 @@ npm --prefix frontend install
 npm --prefix frontend run dev
 ```
 
-Abre [Barber Pro local](http://localhost:5173/login). Si Firebase no está configurado, el servidor de desarrollo ofrece los botones **Administrador** y **Barbero**. También puedes escribir cualquiera de estos usuarios y su contraseña. Son cuentas de ejemplo y sus datos se guardan en el navegador.
+Abre [Barber Pro local](http://localhost:5173/login). Cuando el formulario muestra **Demostración local**, puedes usar los botones **Administrador** y **Barbero**, o ingresar con las cuentas de ejemplo de abajo. Sus datos se guardan en el navegador. Si el formulario muestra **Acceso con Firebase**, usa la contraseña asignada a tu cuenta de Firebase, incluso en `localhost`.
 
 - Administrador `admin` · `DemoLocal777!`
 - Barbero `barbero01` · `Local01!`
